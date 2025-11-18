@@ -35,6 +35,58 @@ function check($n){
 
 echo check(13) ? "prime" :"not prime";
 
+//Problem 4: Find Duplicate Elements in Array
+
+//Input: [1,2,3,4,2,5,1]
+//Output: 1, 2
+
+$arr =[1,2,3,4,2,5,1];
+$counts =array_count_values($arr);
+foreach($counts as $value => $count){
+if($count > 1){
+  echo "$value";
+}
+}
+
+/*
+roblem 5: Student Grade System
+
+Marks input: 85
+Output: A
+
+Grading Rule:
+
+80+ = A
+
+70–79 = B
+
+60–69 = C
+
+50–59 = D
+
+Below 50 = F
+*/
+
+
+function marks($inn){
+    if($inn>80) return "A";
+    elseif($inn>70) return "B";
+    elseif($inn>60) return "C";
+    elseif($inn>50) return "D";
+    else return "F";
+}
+
+echo marks(85);
+
+
+//Problem 6: Word Count Without Using str_word_count()
+
+//Input: "I love PHP"
+//Output: 3
+
+$text =  "I love PHP";
+$word = explode(" ",trim($text));
+echo count($word);
 
 ?>
 
