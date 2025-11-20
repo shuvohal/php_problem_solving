@@ -88,5 +88,57 @@ $text =  "I love PHP";
 $word = explode(" ",trim($text));
 echo count($word);
 
+/*
+ Problem 7: Create a Mini Calculator (Using Functions)
+
+Input: 5, 2, *
+Output: 10
+*/
+
+function calculator($a,$b,$to){
+    switch($to){
+        case '+':return $a+$b;
+        case '-':return $a-$b;
+        case '*':return $a*$b;
+        case '/':return b!=0 ? $a/$b :"cannot divided zero";
+        default :"try again";
+        
+
+    }
+   
+}
+ echo calculator(5,2,'*');
+
+ /*
+ Problem 8: Validate Email Without filter_var()
+
+Input: "test@gmail.com"
+Output: Valid */
+
+function checkemail($email){
+    return preg_match("/^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}$/",$email);
+}
+ echo checkemail("test@gmail.com") ? "valid":"invalid";
+
+ 
+ //Problem 9: CRUD (Create, Read, Update, Delete) on Array
+ 
+ $users = [];
+
+ $users[] ="shuvo";
+
+  $users[] ="tonmoy";
+
+  print_r($users);
+
+  $users[1]="shu";
+   print_r($users);
+
+   unset( $users[0]);
+    print_r($users);
+
+
+
+
 ?>
 
