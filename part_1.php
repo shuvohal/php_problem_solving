@@ -140,5 +140,108 @@ function checkemail($email){
 
 
 
+
+
+/*
+Problem 1: Build a Mini Payment System (OOP)
+
+Create classes:
+
+User
+
+Wallet
+
+Transaction
+
+Requirements:
+
+User can deposit, withdraw, transfer money.
+
+Every transaction must be stored in a transactions array.
+
+Print user balance + transaction history.
+
+Output Example:
+Shuvo deposited 500
+Shuvo transferred 200 to Rafi
+Shuvo's balance: 300
+
+*/
+
+echo "<pre>";
+
+
+class Transaction {
+    public $type, $amount, $from, $to, $time;
+    public function __construct($type, $amount, $from, $to = null) {
+        $this->type = $type;
+        $this->amount = $amount;
+        $this->from = $from;
+        $this->to = $to;
+        $this->time = date('Y-m-d H:i:s');
+    }
+    public function __toString() {
+        if ($this->type === 'transfer') {
+            return "{$this->from} transferred {$this->amount} to {$this->to} at {$this->time}";
+        }
+        return "{$this->from} {$this->type}ed {$this->amount} at {$this->time}";
+    }
+}
+
+class Wallet {
+    public $balance = 0;
+    public $transactions = [];
+    public function deposit($user, $amount) {
+        $this->balance += $amount;
+        $this->transactions[] = new Transaction('deposit', $amount, $user);
+    }
+    public function withdraw($user, $amount) {
+        if ($amount > $this->balance) return false;
+        $this->balance -= $amount;
+        $this->transactions[] = new Transaction('withdraw', $amount, $user);
+        return true;
+    }
+    public function transfer($fromUser, $toUserWallet, $amount) {
+        if ($amount > $this->balance) return false;
+        $this->balance -= $amount;
+        $toUserWallet->balance += $amount;
+        $t = new Transaction('transfer', $amount, $fromUser, $toUserWallet->owner);
+        $this->transactions[] = $t;
+        $toUserWallet->transactions[] = $t;
+        return true;
+    }
+}
+
+class User {
+    public $name;
+    public $wallet;
+    public function __construct($name) {
+        $this->name = $name;
+        $this->wallet = new Wallet();
+        $this->wallet->owner = $name;
+    }
+    public function deposit($amount) { $this->wallet->deposit($this->name, $amount); }
+    public function withdraw($amount) { return $this->wallet->withdraw($this->name, $amount); }
+    public function transferTo(User $other, $amount) { return $this->wallet->transfer($this->name, $other->wallet, $amount); }
+    public function history() {
+        foreach ($this->wallet->transactions as $t) echo $t . PHP_EOL;
+    }
+}
+
+$shuvo = new User('Shuvo');
+$rafi = new User('Rafi');
+
+$shuvo->deposit(500);
+$shuvo->transferTo($rafi, 200);
+echo "Shuvo's balance: {$shuvo->wallet->balance}\n";
+echo "Rafi's balance: {$rafi->wallet->balance}\n";
+$shuvo->history();
+$rafi->history();
+
+
+echo "</pre>";
+
+
 ?>
+
 
